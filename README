@@ -1,0 +1,52 @@
+This calibration package performs TPC electronics calibration using
+reconstructed 83Kr decays. The input data for this package is the ROOT
+file output of the calibration module
+src/Modules/Calibration/TPCKrCalibrationMN, which creates a TTree of
+reconstructe cluster properties (pad, timebin, total charge,
+etc). This module must follow
+src/Modules/Reconstruction/TPCClusterFinerAL, the 2D clusterizer.
+
+The output data of this package is a formatted XML file containing one
+gain measurement for each TPC electronics channel, QA plots displaying
+the reconstructed decay spectra and calculated pad gains, and a ROOT
+file containing each channel's collected decay spectra and the fit
+quantity entering into the gain calculaion.
+
+
+To run on a list of input ROOT files, enter 'make' and then enter
+
+./KryptonAnalyzer -o [output file prefix] -i [list of files]
+
+
+This can be used with shell commands listing files in a directory:
+
+./KryptonAnalyzer -o [output file prefix] -i `ls /path/to/input/files/*.root`
+
+
+Edit cluster cuts in the file Config.txt. Supply a different config
+file with the optional flag '-c / --config'.
+
+
+When the calibration is finished, re-run the reconstruction using the
+pad-by-pad gains and analyze the output. If the analysis was performed
+correctly, the newly-calculated pad gains should be 1 +/- the
+calibration resolution, which is typically less than 1%.
+
+
+To run the analysis on HTCondor (recommended for more than 1000 input
+files), run the script runKryptonAnalyzerOnCondor.sh with the
+following input arguments:
+
+./runKryptonAnalyzerOnCondor.sh [Output Prefix] [Directory Containing Krypton.root Files]
+
+This will submit one Condor job to perform the analysis. This job may
+run for up to 48 hours, at which point the output files will be
+transferred to the directory from which the command was originally
+submitted.
+
+The script will take all files matching *$kryptonFileMatchPattern,
+which is by default set to 'krCalibration.root' (the default suffix of
+TPCKrCalibrationMN files).
+
+Enjoy!
+-Brant Rumberger, 2022

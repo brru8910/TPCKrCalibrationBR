@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!DOCTYPE bootstrap SYSTEM "/afs/cern.ch/user/n/na61qa/SHINEInstallations/install-Master/config/ShineGeneral.dtd" [
+<!ENTITY setupLegacy '/cvmfs/na61.cern.ch/ReleasesDB/v3/Shine/detConfig/@GLOBALKEY@/SetupLegacy.xml'>
+]>
+
+<bootstrap
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:xlink="http://cern.ch/na61/schema/types"
+xsi:noNamespaceSchemaLocation='[SCHEMAPATH]/bootstrap.xsd'>
+
+<schemaPathReplacements>
+  <replace old="[CONFIGDIR]" new="&configDir;"/>
+  <replace old="[SCHEMAPATH]" new="&schemaDir;"/>
+  <replace old="[SCHEMAPATH_IMPORTS]" new="&schemaDir;"/>
+  <replace old="[DATADIR]" new="&dataDir;"/>
+</schemaPathReplacements>
+
+&standardStaticDetConfig;
+
+<centralConfig>
+  <configLink
+      id         = "TPCPadGainFixedManager"
+      xlink:href = "&configDir;/TPCPadGainFixedManager.xml"/>
+</centralConfig>
+  
+</bootstrap>

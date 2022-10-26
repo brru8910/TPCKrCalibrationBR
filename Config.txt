@@ -1,0 +1,68 @@
+### Config file for Krypton Calibration Analyzer ###
+
+# This file is for holding application-specific constants. It is
+# parsed by KryptonAnalyzer. This configuration file is expected to be
+# in the directory in which KryptonAnalyzer is run. Users may override
+# this by providing the path to a valid configuration file using the
+# '-c [path-to-config]' option.
+
+# Lines in this file beginning with a '#' will be ignored. Enjoy!
+
+# TPCs to run in.
+
+tpcList
+VTPC1
+#VTPC2
+#GTPC
+#MTPCL
+#MTPCR
+#FTPC1
+#FTPC2
+#FTPC3
+#LMPDJU
+#LMPDJD
+#LMPDSU
+#LMPDSD
+tpcListEnd
+
+# Type of fit function to use. Either 'Gaussian' or 'Fermi'.
+
+# Gaussian fit will determine peak position, find regions above and
+# below where the histogram drops by a factor of 2, and fit a
+# Gaussian.  Fermi fit will determine the location of the falling edge
+# of the spectrum. This method is more reliable if the main peak is
+# not easilly visible.
+fitFunction Fermi
+
+# Minimum ADC value for acceptable Krypton peak. Peaks below this will
+# be considered noise peaks. Fermi function fit to the end of the
+# spectrum will use the largest peak above this value as the beginning
+# of the "turn-off" point. Check your data!!
+vtpc1UpstreamSectorsMinADCPeakSearch 2000 
+minADCPeakSearch 1500
+
+# Acceptable limits on calculated pad gains. Gains outside these
+# limits will be written as -1, meaning the pad will be ignored in
+# dEdx calculation, cluster position estimation, etc.
+minAcceptableGain 0.5
+maxAcceptableGain 2.5
+
+# Minimum number of entries in histogram to attempt calibration.
+minHistogramEntries 200
+
+# Number of bins in pad histogram. Decrease if your data has fewer
+# events.
+histogramBins 100
+
+# Pad histogram ranges will be from zero to
+# [HistogramPadding]*[minADCPeakSearch] (in ADCs).
+histogramPadding 3.0
+
+# Cluster cuts to get rid of noise. Tune as desired.
+minPads 4
+maxPads 32
+minTimeSliceNumber 30
+minTimeSlices 4
+maxTimeSlices 50
+maxADCCut 20
+chargeCut 6000
